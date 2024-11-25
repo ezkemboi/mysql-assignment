@@ -1,0 +1,58 @@
+CREATE TABLE WORKERS (
+    W_ID INT PRIMARY KEY,
+    FIRSTNAME VARCHAR(50),
+    LASTNAME VARCHAR(50),
+    ADREESSCITY VARCHAR(100)
+);
+
+CREATE TABLE DESIG (
+    W_ID INT PRIMARY KEY,
+    SALARY INT,
+    BENEFITS INT,
+    DESIGNATION VARCHAR(50),
+    FOREIGN KEY (W_ID) REFERENCES WORKERS(W_ID)
+);
+
+INSERT INTO WORKERS (W_ID, FIRSTNAME, LASTNAME, ADREESSCITY) VALUES
+(102, 'Sam', 'Tones', 'Paris'),
+(105, 'Sarah', 'Ackerman', 'New York'),
+(144, 'Manila', 'Sengupta', 'New Delhi'),
+(210, 'George', 'Smith', 'Howard'),
+(255, 'Mary', 'Jones', 'Loganville'),
+(300, 'Robert', 'Samuel', 'Washington'),
+(335, 'Henry', 'Williams', 'Boston'),
+(403, 'Ronny', 'Lee', 'New York'),
+(451, 'Pat', 'Thompson', 'Paris');
+
+INSERT INTO DESIG (W_ID, SALARY, BENEFITS, DESIGNATION) VALUES
+(102, 75000, 15000, 'Manager'),
+(105, 85000, 25000, 'Director'),
+(144, 70000, 15000, 'Manager'),
+(210, 75000, 12500, 'Manager'),
+(255, 50000, 12000, 'Clerk'),
+(300, 45000, 10000, 'Clerk'),
+(335, 40000, 10000, 'Clerk'),
+(403, 32000, 7500, 'Salesman'),
+(451, 28000, 7500, 'Salesman');
+
+SELECT W_ID, FIRSTNAME, ADREESSCITY
+FROM WORKERS
+WHERE ADREESSCITY = 'New York';
+
+SELECT *
+FROM WORKERS
+ORDER BY LASTNAME ASC;
+
+SELECT W.FIRSTNAME, W.LASTNAME, (D.SALARY + D.BENEFITS) AS Total_Salary
+FROM WORKERS W
+JOIN DESIG D ON W.W_ID = D.W_ID
+WHERE D.DESIGNATION = 'Clerk';
+
+SELECT MIN(SALARY) AS Min_Salary
+FROM DESIG
+WHERE DESIGNATION IN ('Manager', 'Clerk');
+
+SELECT W.FIRSTNAME, D.SALARY
+FROM WORKERS W
+JOIN DESIG D ON W.W_ID = D.W_ID
+WHERE D.DESIGNATION = 'Manager';
